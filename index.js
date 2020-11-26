@@ -107,6 +107,18 @@ client.connect(err => {
     })
   })
 
+  app.patch('/updatePromoCodesUseTime', (req,res)=>{    //----------- update Promo codes------------------------------
+    promoCodesCollection.updateOne(
+      {_id: ObjectId(req.body.id)}, //filter
+      { 
+        $set: { useTime: req.body.useTime} //update 
+      }
+    )
+    .then(result => {   //option   
+      res.send(result.modifiedCount> 0)
+    })
+  })
+
   app.post('/addNewOrder', (req, res)=>{ //add new order
     const order = req.body;
     ordersCollection.insertOne(order)
