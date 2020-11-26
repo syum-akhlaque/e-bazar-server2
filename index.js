@@ -57,6 +57,16 @@ client.connect(err => {
       res.send(documents)
     } )
   })
+
+  app.get('/allProductsBySearch', (req, res)=>{    //-----------home page product fileter ----------------------------
+    const search = req.query.search;
+    console.log(search)
+    productCollection.find({name: {$regex: search }})
+    // productCollection.find({name: { $search: search}} )
+    .toArray( (err, documents) => {
+      res.send(documents)
+    } )
+  })
   
   app.get('/allOrders', (req, res)=>{    //-----------to get all order, shown in dashboard order----------------------------
     ordersCollection.find()
@@ -67,7 +77,6 @@ client.connect(err => {
 
   app.get('/orderByStatus', (req, res)=>{    //-----------to get order list by status ----------------------------
     const status = req.query.status;
-    console.log(status)
     ordersCollection.find({status: {$regex: status }})
     .toArray( (err, documents) => {
       res.send(documents)
