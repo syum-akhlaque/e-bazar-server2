@@ -60,9 +60,9 @@ client.connect(err => {
 
   app.get('/allProductsBySearch', (req, res)=>{    //-----------home page product fileter ----------------------------
     const search = req.query.search;
-    console.log(search)
-    productCollection.find({name: {$regex: search }})
-    // productCollection.find({name: { $search: search}} )
+    var regex = new RegExp(["", search, ""].join(""), "i");
+    // productCollection.find({name: {$regex: search }})
+    productCollection.find({name: {$regex: regex }} )
     .toArray( (err, documents) => {
       res.send(documents)
     } )
